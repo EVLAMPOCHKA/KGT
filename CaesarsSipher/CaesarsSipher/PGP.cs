@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CaesarsSipher;
+﻿namespace CaesarsSipher;
 
 public static class Pgp
 {
