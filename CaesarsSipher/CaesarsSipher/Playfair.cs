@@ -3,13 +3,13 @@
 public static class Playfair
 {
     private const string Alphabet = "ABCDEFGHIGKLMNOPQRSTUVWXYZ";
-    private const string Key = "MATHH";
-    private const string LastName = "NASTYA";
+    private const string Key = "HASBIK";
+    private const string LastName = "VINSKOVICH";
 
     private static char[,] GetKeyTable(string key)
     {
-        var newKey = key.Distinct();
-            var newAlphabet = new List<char>();
+        var newKey = key.Distinct(); 
+        var newAlphabet = new List<char>();
         newAlphabet.AddRange(newKey);
         newAlphabet.AddRange(Alphabet.Except(Key));
         char[,] keyTable = new Char[5, 5];

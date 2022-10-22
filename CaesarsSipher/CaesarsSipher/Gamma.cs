@@ -4,8 +4,8 @@ namespace CaesarsSipher;
 
 public static class Gamma
 {
-    private const string Text = "Neverova";
-    private const string Key = "Frog";
+    private const string Text = "secret";
+    private const string Key = "key";
 
     private static byte[] GetAsciiBytes(string value)
     {
@@ -45,10 +45,13 @@ public static class Gamma
 
     public static void ShowWork()
     {
-        var sipher = GetSipher(GetAsciiBytes(Text), GetAsciiBytes(GetValidKey(Key, Text.Length)));
+        var textInBytes = GetAsciiBytes(Text);
+        var keyInBytes = GetAsciiBytes(GetValidKey(Key, Text.Length));
+        var sipher = GetSipher(textInBytes, keyInBytes);
         Console.WriteLine($"Real text: {Text}");
         Console.WriteLine($"Sipher: {GetValueByAsciiBytes(sipher)}");
-        var realText = GetSipher(sipher, GetAsciiBytes(GetValidKey(Key, Text.Length)));
-        Console.WriteLine($"Real text: {GetValueByAsciiBytes(realText)}");
+        var realText = GetValueByAsciiBytes(GetSipher(sipher, GetAsciiBytes(GetValidKey(Key, Text.Length))));
+     
+        Console.WriteLine($"Real text: {realText}");
     }
 }
