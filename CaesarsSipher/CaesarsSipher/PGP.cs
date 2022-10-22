@@ -1,9 +1,12 @@
-﻿namespace CaesarsSipher;
+﻿using System;
+
+namespace CaesarsSipher;
 
 public static class Pgp
 {
     private const string Symbols = "aбвгдежзийклмноп";
-    private const long X = 179357333; // 11 variant
+    private const int X = 179357333; // 11 variant
+    private const long Value = 22448993011;
 
     private static string ToBinary(long value)
     {
@@ -17,9 +20,13 @@ public static class Pgp
         {
             var binary = ToBinary(index);
             result.Add(symbols[index],
-                binary.Length == 1 ? "000" + binary :
-                binary.Length == 2 ? "00" + binary :
-                binary.Length == 3 ? "0" + binary : binary);
+                binary.Length switch
+                {
+                    1 => $"000{binary}",
+                    2 => $"00{binary}",
+                    3 => $"0{binary}",
+                    _ => binary
+                });
         }
 
         return result;
@@ -47,19 +54,24 @@ public static class Pgp
 
     private static string GetValueAfterPledge(string valueIn28Bits)
     {
-        return valueIn28Bits.Substring(5, valueIn28Bits.Length - 5) + valueIn28Bits.Substring(0, 5);
+        return string.Concat(valueIn28Bits.AsSpan(5, valueIn28Bits.Length - 5), valueIn28Bits[..5]);
     }
 
+    private static long GetSumByMod(long value1, int value2)
+    {
+        return (value1 + value2) % 2;
+    }
     public static void ShowWork()
     {
         Console.WriteLine($"3^43 is {ToBinary(BitConverter.DoubleToInt64Bits(Math.Pow(3, 43)))} in binary");
         var result = GenerateMessage(GetBinaryCodes(Symbols));
         Console.WriteLine(result);
         Console.WriteLine(
-            $"Binary value: {result.Substring(0, 64)} - Decimal value: {ToDecimal(result.Substring(0, 64))}");
+            $"Binary value: {result[..64]} - Decimal value: {ToDecimal(result[..64])}");
         Console.WriteLine(
             $"Binary value: {result.Substring(64, 64)} - Decimal value: {ToDecimal(result.Substring(64, 64))}");
         Console.WriteLine($"{ToBinary(Convert.ToInt32(X))} => {GetValueAfterPledge(ToBinary(Convert.ToInt32(X)))}");
         Console.WriteLine($"{X} => {ToDecimal(GetValueAfterPledge(ToBinary(Convert.ToInt32(X))))}");
+        Console.WriteLine($"({Value} + {X}) mod 2 = {GetSumByMod(Value, X)}");
     }
 }
