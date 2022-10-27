@@ -49,6 +49,7 @@ public static class Gamma
         var keyInBytes = GetAsciiBytes(GetValidKey(Key, Text.Length));
         var sipher = GetSipher(textInBytes, keyInBytes);
         Console.WriteLine($"Real text: {Text}");
+        Console.WriteLine($"Key: {Key}");
         Console.WriteLine($"Sipher: {GetValueByAsciiBytes(sipher)}");
         var realText = GetValueByAsciiBytes(GetSipher(sipher, GetAsciiBytes(GetValidKey(Key, Text.Length))));
      

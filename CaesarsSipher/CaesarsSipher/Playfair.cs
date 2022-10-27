@@ -3,8 +3,8 @@
 public static class Playfair
 {
     private const string Alphabet = "ABCDEFGHIGKLMNOPQRSTUVWXYZ";
-    private const string Key = "HASBIK";
-    private const string LastName = "VINSKOVICH";
+    private const string Key = "FROG";
+    private const string LastName = "NEVEROVA";
 
     private static char[,] GetKeyTable(string key)
     {

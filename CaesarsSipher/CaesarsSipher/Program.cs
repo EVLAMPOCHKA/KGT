@@ -2,5 +2,5 @@
 
 //Caesars.ShowWork();
 //Playfair.ShowWork();
-//Gamma.ShowWork();
-Pgp.ShowWork();
+Gamma.ShowWork();
+//Pgp.ShowWork();
