@@ -4,32 +4,17 @@ namespace CaesarsSipher;
 
 public static class Gamma
 {
-    private const string Text = "secret";
-    private const string Key = "key";
+    private const string Text = "secret"; // текст для зашифровки
+    private const string Key = "key"; // ключ для шифрования
 
-    private static byte[] GetAsciiBytes(string value)
+    private static byte[] GetAsciiBytes(string value) // метод который переводит строку в массив байтов (каждая буква = какой-то байт в таблице АСКИ)
     {
-        return Encoding.ASCII.GetBytes(value);
+        return Encoding.ASCII.GetBytes(value); // возвращаем этот массив
     }
 
-    private static string GetValueByAsciiBytes(byte[] bytes)
+    private static string GetValueByAsciiBytes(byte[] bytes) // метод который наоборот из массива байтов собирает слово
     {
-        return Encoding.ASCII.GetString(bytes);
-    }
-    
-    private static string GetValidKey(string key, int length)
-    {
-        if (key.Length >= length)
-        {
-            return key;
-        }
-        var newKey = key;
-        for(var i = 0; i<length - key.Length; i++)
-        {
-            newKey += key[i % key.Length];
-        }
-
-        return newKey;
+        return Encoding.ASCII.GetString(bytes); // возвращает это слово
     }
 
     private static byte[] GetSipher(byte[] text, byte[] key)
@@ -46,12 +31,12 @@ public static class Gamma
     public static void ShowWork()
     {
         var textInBytes = GetAsciiBytes(Text);
-        var keyInBytes = GetAsciiBytes(GetValidKey(Key, Text.Length));
+        var keyInBytes = GetAsciiBytes(Defaults.GetValidKey(Key, Text.Length));
         var sipher = GetSipher(textInBytes, keyInBytes);
         Console.WriteLine($"Real text: {Text}");
         Console.WriteLine($"Key: {Key}");
         Console.WriteLine($"Sipher: {GetValueByAsciiBytes(sipher)}");
-        var realText = GetValueByAsciiBytes(GetSipher(sipher, GetAsciiBytes(GetValidKey(Key, Text.Length))));
+        var realText = GetValueByAsciiBytes(GetSipher(sipher, GetAsciiBytes(Defaults.GetValidKey(Key, Text.Length))));
      
         Console.WriteLine($"Real text: {realText}");
     }

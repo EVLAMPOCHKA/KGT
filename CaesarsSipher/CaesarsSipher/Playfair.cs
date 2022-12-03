@@ -2,7 +2,6 @@
 
 public static class Playfair
 {
-    private const string Alphabet = "ABCDEFGHIGKLMNOPQRSTUVWXYZ";
     private const string Key = "FROG";
     private const string LastName = "NEVEROVA";
 
@@ -11,7 +10,7 @@ public static class Playfair
         var newKey = key.Distinct(); 
         var newAlphabet = new List<char>();
         newAlphabet.AddRange(newKey);
-        newAlphabet.AddRange(Alphabet.Except(Key));
+        newAlphabet.AddRange(Defaults.Alphabet.Except(Key));
         char[,] keyTable = new Char[5, 5];
         int index = 0;
         for (int i = 0; i < 5; i++)
